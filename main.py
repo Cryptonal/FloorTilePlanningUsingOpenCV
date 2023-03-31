@@ -67,9 +67,13 @@ def find_rooms(img, noise_removal_threshold=25, corners_threshold=0.1,
     img[img > 128] = 255
     contours, _ = cv2.findContours(~img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     mask = np.zeros_like(img)
-    for contour in contours:
+    for i, contour in enumerate(contours):
         area = cv2.contourArea(contour)
-        print("Area of contour:" + str(area))
+        print("Area of contour " + str(i) + ": " + str(area))
+        tile_area = 10 * 10  # Assuming each tile is 10x10 square units
+        num_tiles = area // tile_area
+        print("No of tiles required are:" + str(num_tiles) + "\n")
+
         if area > noise_removal_threshold:
             cv2.fillPoly(mask, [contour], 255)
 
@@ -140,14 +144,10 @@ def find_rooms(img, noise_removal_threshold=25, corners_threshold=0.1,
 
     return rooms, img
 
-
-
 #Read gray image
 img = cv2.imread("DilationImage.PNG", 0)
 rooms, colored_house = find_rooms(img.copy())
 cv2.imshow('Step 3: Result', colored_house)
-
-
 
 ###2nd Part Completed----------------------------------------------------------------------//
 

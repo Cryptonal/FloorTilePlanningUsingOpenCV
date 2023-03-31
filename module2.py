@@ -23,7 +23,7 @@ for c in sorted_contours[1:]:
         x, y, w, h = cv2.boundingRect(c) # the lines below are for getting the approximate center of the rooms
         cx = x + w / 2
         cy = y + h / 2
-        cv2.putText(img,str(area),(cx,cy), cv2.FONT_HERSHEY_SIMPLEX, .5,(255,0,0),1,cv2.CV_AA)
+        cv2.putText(img,str(area),(cx,cy), cv2.FONT_HERSHEY_SIMPLEX, .5,(255,0,0),1,lineType=cv2.LINE_AA)
 
 cv2.imshow("mor_img", mor_img)
 cv2.imshow("img", img)
