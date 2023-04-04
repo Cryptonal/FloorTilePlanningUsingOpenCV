@@ -69,10 +69,14 @@ def find_rooms(img, noise_removal_threshold=25, corners_threshold=0.1,
     mask = np.zeros_like(img)
     for i, contour in enumerate(contours):
         area = cv2.contourArea(contour)
+        ##Currently, the area is in pixel measurements, since input is an pixeled image. But if we know the area of each pixel of image we can convert it to square meters unit.
         print("Area of contour " + str(i) + ": " + str(area))
         tile_area = 10 * 10  # Assuming each tile is 10x10 square units
-        num_tiles = area // tile_area
-        print("No of tiles required are:" + str(num_tiles) + "\n")
+        num_tiles = (area // tile_area)
+        if(area % tile_area == 0):
+            print("No of tiles required are:" + str(num_tiles) + "\n")
+        else:
+            print("No of tiles required are:" + str(num_tiles + 1) + "\n")
 
         if area > noise_removal_threshold:
             cv2.fillPoly(mask, [contour], 255)
@@ -92,11 +96,8 @@ def find_rooms(img, noise_removal_threshold=25, corners_threshold=0.1,
         for x1, x2 in zip(x_same_y[:-1], x_same_y[1:]):
             if x2[0] - x1[0] < room_closing_max_length:
                 if x1 and y and x2:
-                    x1 = int(x1)
-                    x2 = int(x2)
-                    y = int(y)
                     color = 0
-                    cv2.line(img, (x1, y), (x2, y), color, 1)
+                    cv2.line(img, (x1[0], y), (x2[0], y), color, 1)
 
                 else:
                     x1 = x2 = y = 0
@@ -108,11 +109,8 @@ def find_rooms(img, noise_removal_threshold=25, corners_threshold=0.1,
         for y1, y2 in zip(y_same_x[:-1], y_same_x[1:]):
             if y2[0] - y1[0] < room_closing_max_length:
                 if x and y1 and y2:
-                    x = int(x)
-                    y1 = int(y1)
-                    y2 = int(y2)
                     color = 0
-                    cv2.line(img, (x, y1), (x, y2), color, 1)
+                    cv2.line(img, (x, y1[0]), (x, y2[0]), color, 1)
 
                 else:
                     x = y1 = y2 = 0
