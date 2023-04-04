@@ -9,7 +9,7 @@ _, thresh = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY)
 
 cv2.imshow("thresh", thresh)
 
-mor_img = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, (5, 5), iterations=3)
+mor_img = cv2.morphologyEx(thresh, cv2.MORPH_OPEN, (5, 5), iterations=3) #Removing noise in image
 
 contours, _ = cv2.findContours(mor_img, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 

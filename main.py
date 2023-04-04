@@ -71,7 +71,7 @@ def find_rooms(img, noise_removal_threshold=25, corners_threshold=0.1,
         area = cv2.contourArea(contour)
         ##Currently, the area is in pixel measurements, since input is an pixeled image. But if we know the area of each pixel of image we can convert it to square meters unit.
         print("Area of contour " + str(i) + ": " + str(area))
-        tile_area = 10 * 10  # Assuming each tile is 10x10 square units
+        tile_area = 10 * 10  # Assuming each tile is 10x10 square units.
         num_tiles = (area // tile_area)
         if(area % tile_area == 0):
             print("No of tiles required are:" + str(num_tiles) + "\n")
